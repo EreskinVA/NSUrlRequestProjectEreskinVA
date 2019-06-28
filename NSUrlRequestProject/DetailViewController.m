@@ -22,6 +22,9 @@
 
 @implementation DetailViewController
 
+
+#pragma mark - Lifу cyckle
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,6 +35,9 @@
     
     self.arrayImages = [[NSMutableArray alloc] init];
 }
+
+
+#pragma mark - Method user interface
 
 - (void)prepareUI
 {
@@ -62,23 +68,7 @@
     }
 }
 
-- (void) setDisplayData
-{
-    NSString *dataString = [NSString stringWithFormat:@"farm - %@\nid - %@\nisfamily - %@\nisfriend - %@\nispublic - %@\nowner - %@\nsecret - %@\nserver - %@\n\ntitle - %@",
-                            self.detailData[@"farm"],
-                            self.detailData[@"id"],
-                            self.detailData[@"isfamily"],
-                            self.detailData[@"isfriend"],
-                            self.detailData[@"ispublic"],
-                            self.detailData[@"owner"],
-                            self.detailData[@"secret"],
-                            self.detailData[@"server"],
-                            self.detailData[@"title"]];
-    
-    
-    self.textView.text = dataString;
-}
-
+// добавление кнопки Закрыть
 - (void) addBackButton
 {
     UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2 - 40, CGRectGetHeight(self.view.frame) - 120, 80, 40)];
@@ -89,6 +79,7 @@
     [self.view addSubview:backButton];
 }
 
+// добавление кнопки отмена последнего эффекта
 - (void) addCancelFilterEffectButton
 {
     UIButton *cancelFilterEffect = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2 - 60, CGRectGetMaxY(self.imageView.frame) + 10, 120, 40)];
@@ -99,6 +90,7 @@
     [self.view addSubview:cancelFilterEffect];
 }
 
+// добавление кнопок применения различных фильтров
 - (void) addFilterButton
 {
     UIButton *filter1Button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.imageView.frame) + 10, CGRectGetMidY(self.imageView.frame) - 55, 30, 30)];
@@ -135,6 +127,7 @@
     [self.view addSubview:filter3Button];
 }
 
+// добавления View для отображения картинки
 - (void) addImageView
 {
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(50, CGRectGetMaxY(self.textView.frame) + 50, CGRectGetWidth(self.view.frame) - 100, 350)];
@@ -143,27 +136,57 @@
     [self.view addSubview:self.imageView];
 }
 
+
+#pragma mark - получение данных для отобрадения
+
+// формирование и отображения текстовых данных
+- (void) setDisplayData
+{
+    NSString *dataString = [NSString stringWithFormat:@"farm - %@\nid - %@\nisfamily - %@\nisfriend - %@\nispublic - %@\nowner - %@\nsecret - %@\nserver - %@\n\ntitle - %@",
+                            self.detailData[@"farm"],
+                            self.detailData[@"id"],
+                            self.detailData[@"isfamily"],
+                            self.detailData[@"isfriend"],
+                            self.detailData[@"ispublic"],
+                            self.detailData[@"owner"],
+                            self.detailData[@"secret"],
+                            self.detailData[@"server"],
+                            self.detailData[@"title"]];
+    
+    
+    self.textView.text = dataString;
+}
+
+// загрузка картинки из сети
+- (void)loadImage
+{
+    NetworkService *networkService = [NetworkService new];
+    networkService.output = self;
+    [networkService configureUrlSessionWithParams:nil];
+    NSString *urlString = [NetworkHelper URLForGetPhoto:self.detailData[@"id"]
+                                                 farmId:self.detailData[@"farm"]
+                                               serverId:self.detailData[@"server"]
+                                               secretId:self.detailData[@"secret"]];
+    
+    [networkService startImageLoading:urlString success:^(NSData *data) {
+        if (data != nil)
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                self.imageView.image = [UIImage imageWithData:data];
+            });
+        }
+    }];
+}
+
+#pragma mark - Navigation
+
 - (void) navigateBack
 {
     [self dismissViewControllerAnimated:true completion:nil];
 }
 
-- (void)setData:(NSDictionary *)data
-{
-    self.detailData = data;
-}
 
-- (void)сancelFilterEffect
-{
-    if (self.arrayImages.count != 0)
-    {
-        UIImage *lastImage = [UIImage new];
-        lastImage = self.arrayImages.lastObject;
-        [self.imageView setImage:lastImage];
-        
-        [self.arrayImages removeObjectAtIndex:self.arrayImages.count - 1];
-    } 
-}
+#pragma mark - Image Filtering
 
 - (void) setFilterImageButton1
 {
@@ -188,7 +211,17 @@
     self.imageView.image = [self imageAfterFiltering:self.imageView.image withIntensity:intensity forButton:buttonNumber];
 }
 
-#pragma mark - CIFilter
+- (void)сancelFilterEffect
+{
+    if (self.arrayImages.count != 0)
+    {
+        UIImage *lastImage = [UIImage new];
+        lastImage = self.arrayImages.lastObject;
+        [self.imageView setImage:lastImage];
+        
+        [self.arrayImages removeObjectAtIndex:self.arrayImages.count - 1];
+    }
+}
 
 - (UIImage *)imageAfterFiltering:(UIImage *)imageToFilter withIntensity: (NSNumber *) intensity forButton:(NSNumber *)buttonNumber
 {
@@ -229,33 +262,21 @@
     return filteredImage;
 }
 
-- (void)loadImage
-{
-    NetworkService *networkService = [NetworkService new];
-    networkService.output = self;
-    [networkService configureUrlSessionWithParams:nil];
-    NSString *urlString = [NetworkHelper URLForGetPhoto:self.detailData[@"id"]
-                                                 farmId:self.detailData[@"farm"]
-                                               serverId:self.detailData[@"server"]
-                                               secretId:self.detailData[@"secret"]];
-    
-    [networkService startImageLoading:urlString success:^(NSData *data) {
-        if (data != nil)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.imageView.image = [UIImage imageWithData:data];
-            });
-        }
-    }];
-}
+
+#pragma mark - Setters
 
 - (void)setPhotoImage:(UIImage *)photoImage
 {
     self.image = photoImage;
 }
 
+- (void)setData:(NSDictionary *)data
+{
+    self.detailData = data;
+}
 
-#pragma mark - Helpers
+
+#pragma mark - Helpers method
 
 - (UIImage *)normalizedImageWithImage:(UIImage *)image
 {
