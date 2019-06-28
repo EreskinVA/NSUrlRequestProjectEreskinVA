@@ -216,10 +216,8 @@
     if (self.arrayImages.count != 0)
     {
         UIImage *lastImage = [UIImage new];
-        lastImage = self.arrayImages.lastObject;
-        [self.imageView setImage:lastImage];
-        
-        [self.arrayImages removeObjectAtIndex:self.arrayImages.count - 1];
+        [self.imageView setImage:self.arrayImages.lastObject];
+        [self.arrayImages removeObject:self.arrayImages.lastObject];
     }
 }
 
