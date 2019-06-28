@@ -324,7 +324,10 @@ static const NSString *identifierForActions = @"LCTReminderCategory";
     
     NSDictionary *detailPhoto = self.list[indexPath.row];
     
+    FlickrCollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    
     detailVC.data = detailPhoto;
+    detailVC.photoImage = cell.coverImage;
     
     [self presentViewController:detailVC animated:true completion:nil];
 }

@@ -119,5 +119,9 @@
     }
 }
 
+- (UIImage *)coverImage {
+    return self.coverImageView.image;
+}
+
 
 @end

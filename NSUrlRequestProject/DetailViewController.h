@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface DetailViewController : UIViewController
 
-@property (nonatomic, strong) NSDictionary* data;
+@property (nonatomic, strong) NSDictionary *data;
+@property (nonatomic, strong) UIImage *photoImage;
 
 @end
 
