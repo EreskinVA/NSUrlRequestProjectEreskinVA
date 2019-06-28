@@ -25,7 +25,7 @@
 - (BOOL)resumeNetworkLoading;
 - (void)suspendNetworkLoading;
 
-- (void)findFlickrPhotoWithSearchString:(NSString *)searcSrting;
+- (void)findFlickrPhotoWithSearchString:(NSString *)searcSrting page:(NSString *)page;
 
 @end
 

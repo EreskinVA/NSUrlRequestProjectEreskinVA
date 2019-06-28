@@ -10,7 +10,7 @@
 
 @interface NetworkHelper : NSObject
 
-+ (NSString *)URLForSearchString:(NSString *)searchString;
++ (NSString *)URLForSearchString:(NSString *)searchString page:(NSString *)page;
 + (NSString *)URLForGetPhoto:(NSString *)photoId farmId:(NSString *)farmId serverId:(NSString *)serverId secretId:(NSString *)secretId;
 
 @end

@@ -10,10 +10,10 @@
 
 @implementation NetworkHelper
 
-+ (NSString *)URLForSearchString:(NSString *)searchString
++ (NSString *)URLForSearchString:(NSString *)searchString page:(NSString *)page
 {
     NSString *APIKey = @"36afdf0b49408215a558fe193648faac";
-    return [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=25&format=json&nojsoncallback=1", APIKey, searchString];
+    return [NSString stringWithFormat:@"https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=%@&tags=%@&per_page=%@&format=json&nojsoncallback=1", APIKey, searchString, page];
 }
 
 + (NSString *)URLForGetPhoto:(NSString *)photoId farmId:(NSString *)farmId serverId:(NSString *)serverId secretId:(NSString *)secretId

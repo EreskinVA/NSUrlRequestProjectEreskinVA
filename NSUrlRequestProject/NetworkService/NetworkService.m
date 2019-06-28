@@ -95,9 +95,9 @@
     }];
 }
 
-- (void)findFlickrPhotoWithSearchString:(NSString *)searchSrting
+- (void)findFlickrPhotoWithSearchString:(NSString *)searchSrting page:(NSString *)page
 {
-    NSString *urlString = [NetworkHelper URLForSearchString:searchSrting];
+    NSString *urlString = [NetworkHelper URLForSearchString:searchSrting page:page];
         
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString: urlString]];

@@ -35,6 +35,8 @@ static const CGFloat imageOffset = 100.f;
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, copy) NSArray<NSString *> *list;
+@property (nonatomic, copy) NSString *searchText;
+@property (nonatomic, assign) NSInteger indexPageLoaded;
 
 @end
 
@@ -43,6 +45,7 @@ static const CGFloat imageOffset = 100.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.indexPageLoaded = 25;
     
 #if FIRST_STEP
     // Простейший способ - STEP 1
@@ -238,7 +241,8 @@ static const CGFloat imageOffset = 100.f;
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    [self.networkService findFlickrPhotoWithSearchString:searchText];
+    self.searchText = searchText;
+    [self.networkService findFlickrPhotoWithSearchString:searchText page:[NSString stringWithFormat:@"%ld",self.indexPageLoaded]];
     
 }
 
@@ -279,6 +283,14 @@ static const CGFloat imageOffset = 100.f;
     
     cell.title = photo[@"title"];
     
+    // загрузка следующей страницы
+    if (indexPath.row == ([self.list count] - 1))
+    {
+        self.indexPageLoaded += 25;
+        NSString *pageNumber = [NSString stringWithFormat:@"%ld",self.indexPageLoaded];
+        [self loadNextPage:pageNumber];
+    }
+    
     return cell;
 }
 
@@ -297,6 +309,11 @@ static const CGFloat imageOffset = 100.f;
 {
     CGFloat size = CGRectGetWidth(self.view.frame) / 2 - 20;
     return CGSizeMake(size, size * 1.5);
+}
+     
+- (void) loadNextPage:(NSString *)pageNumber
+{
+    [self.networkService findFlickrPhotoWithSearchString:self.searchText page:pageNumber];
 }
 
 @end
