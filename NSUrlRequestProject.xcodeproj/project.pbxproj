@@ -16,6 +16,7 @@
 		1FC25EE11FD01B78009C5C73 /* NetworkService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC25EDF1FD01B78009C5C73 /* NetworkService.m */; };
 		1FC25EE51FD02AF2009C5C73 /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC25EE41FD02AF2009C5C73 /* NetworkHelper.m */; };
 		1FC25EE91FD070A1009C5C73 /* SBSProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC25EE81FD070A1009C5C73 /* SBSProgressView.m */; };
+		2B078A4822C617CD005DBBB7 /* CustomLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B078A4722C617CD005DBBB7 /* CustomLayout.m */; };
 		2B37F25D22C45AD600535607 /* FlickrCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B37F25C22C45AD600535607 /* FlickrCollectionViewCell.m */; };
 		2B37F26222C5E28400535607 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B37F26122C5E28400535607 /* DetailViewController.m */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,8 @@
 		1FC25EE41FD02AF2009C5C73 /* NetworkHelper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NetworkHelper.m; sourceTree = "<group>"; };
 		1FC25EE71FD070A1009C5C73 /* SBSProgressView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBSProgressView.h; sourceTree = "<group>"; };
 		1FC25EE81FD070A1009C5C73 /* SBSProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBSProgressView.m; sourceTree = "<group>"; };
+		2B078A4622C617CD005DBBB7 /* CustomLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomLayout.h; sourceTree = "<group>"; };
+		2B078A4722C617CD005DBBB7 /* CustomLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomLayout.m; sourceTree = "<group>"; };
 		2B37F25B22C45AD600535607 /* FlickrCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlickrCollectionViewCell.h; sourceTree = "<group>"; };
 		2B37F25C22C45AD600535607 /* FlickrCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlickrCollectionViewCell.m; sourceTree = "<group>"; };
 		2B37F26022C5E28400535607 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
@@ -80,6 +83,7 @@
 				1FC25EC61FD00489009C5C73 /* AppDelegate.m */,
 				1FC25EC81FD00489009C5C73 /* ViewController.h */,
 				1FC25EC91FD00489009C5C73 /* ViewController.m */,
+				2B078A4522C61793005DBBB7 /* CustomLayout */,
 				2B37F25F22C5E25D00535607 /* DetailViewController */,
 				2B37F25A22C45AB200535607 /* CollectionViewCell */,
 				1FC25ECB1FD00489009C5C73 /* Main.storyboard */,
@@ -110,6 +114,15 @@
 				1FC25EE81FD070A1009C5C73 /* SBSProgressView.m */,
 			);
 			path = CustomProgressView;
+			sourceTree = "<group>";
+		};
+		2B078A4522C61793005DBBB7 /* CustomLayout */ = {
+			isa = PBXGroup;
+			children = (
+				2B078A4622C617CD005DBBB7 /* CustomLayout.h */,
+				2B078A4722C617CD005DBBB7 /* CustomLayout.m */,
+			);
+			name = CustomLayout;
 			sourceTree = "<group>";
 		};
 		2B37F25A22C45AB200535607 /* CollectionViewCell */ = {
@@ -201,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B078A4822C617CD005DBBB7 /* CustomLayout.m in Sources */,
 				1FC25ECA1FD00489009C5C73 /* ViewController.m in Sources */,
 				2B37F25D22C45AD600535607 /* FlickrCollectionViewCell.m in Sources */,
 				1FC25ED51FD00489009C5C73 /* main.m in Sources */,

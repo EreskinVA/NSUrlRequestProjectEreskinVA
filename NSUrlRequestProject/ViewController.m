@@ -12,6 +12,7 @@
 #import "FlickrCollectionViewCell.h"
 #import "NetworkHelper.h"
 #import "DetailViewController.h"
+#import "CustomLayout.h"
 
 
 #define FIRST_STEP 0
@@ -22,6 +23,10 @@
 static const CGFloat imageOffset = 100.f;
 
 @interface ViewController () <NetworkServiceOutputProtocol, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
+{
+    CustomLayout *customLayout;
+    UICollectionViewFlowLayout *flowLayout;
+}
 
 @property (nonatomic, strong) UIImageView *imageView;
 @property (nonatomic, strong) UIProgressView *progressView;
@@ -37,6 +42,7 @@ static const CGFloat imageOffset = 100.f;
 @property (nonatomic, copy) NSArray<NSString *> *list;
 @property (nonatomic, copy) NSString *searchText;
 @property (nonatomic, assign) NSInteger indexPageLoaded;
+@property (nonatomic, strong) UISegmentedControl *layoutSegmentControl;
 
 @end
 
@@ -45,7 +51,6 @@ static const CGFloat imageOffset = 100.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.indexPageLoaded = 25;
     
 #if FIRST_STEP
     // Простейший способ - STEP 1
@@ -73,7 +78,7 @@ static const CGFloat imageOffset = 100.f;
     // http://is1.mzstatic.com/image/thumb/Purple2/v4/91/59/e1/9159e1b3-f67c-6c05-0324-d56f4aee156a/source/100x100bb.jpg
     [downloadTask resume];
 #endif
-   
+    
 #if THIRD_STEP
     [self prepareUI];
     self.networkService = [NetworkService new];
@@ -99,7 +104,12 @@ static const CGFloat imageOffset = 100.f;
     
     [self.collectionView registerClass:[FlickrCollectionViewCell class] forCellWithReuseIdentifier:@"cellId"];
     
-//    [self.networkService findFlickrPhotoWithSearchString:@"Nature"];
+    customLayout = [CustomLayout new];
+    customLayout.cellSize = CGSizeMake(CGRectGetWidth(self.collectionView.frame) / 2 - 20, (CGRectGetWidth(self.collectionView.frame) / 2 - 20) * 1.5);
+    customLayout.sectionSpacing = CGSizeMake(10, 10);
+    flowLayout = (id)self.collectionView.collectionViewLayout;
+    
+    self.indexPageLoaded = 25;
 #endif
     
     
@@ -124,7 +134,7 @@ static const CGFloat imageOffset = 100.f;
     self.resumeDownloadButton.frame =CGRectMake(imageOffset, CGRectGetHeight(self.view.frame) - imageOffset * 2, imageOffset, imageOffset);
     self.resumeDownloadButton.hidden = YES;
     [self.view addSubview:self.resumeDownloadButton];
-
+    
     self.cancelDownloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.cancelDownloadButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     [self.cancelDownloadButton setTitle:@"Остановить" forState:UIControlStateNormal];
@@ -139,19 +149,30 @@ static const CGFloat imageOffset = 100.f;
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 50, CGRectGetWidth(self.view.frame), 50)];
     [self.view addSubview:self.searchBar];
     
+    // создание переключателя Flow/Custom layout
+    self.layoutSegmentControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2 - 100, CGRectGetHeight(self.searchBar.frame) + 60, 200, 40)];
+    [self.layoutSegmentControl insertSegmentWithTitle:@"Flow" atIndex:0 animated:YES];
+    [self.layoutSegmentControl insertSegmentWithTitle:@"Custom" atIndex:1 animated:NO];
+    [self.layoutSegmentControl setSelectedSegmentIndex:0];
+    [self.layoutSegmentControl addTarget:self action:@selector(changeSelectedSegmentControl) forControlEvents:UIControlEventValueChanged];
+    
+    [self.view addSubview:self.layoutSegmentControl];
+    
     // создание CollectionView
     UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
-    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, self.searchBar.frame.origin.y + self.searchBar.frame.size.height + 10, CGRectGetWidth(self.view.frame) - 20, CGRectGetHeight(self.view.frame) - self.searchBar.frame.size.height - 50) collectionViewLayout:layout];
+    self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(self.layoutSegmentControl.frame) + 10, CGRectGetWidth(self.view.frame) - 20, CGRectGetHeight(self.view.frame) - CGRectGetHeight(self.layoutSegmentControl.frame) - self.searchBar.frame.size.height - 50 - 60) collectionViewLayout:layout];
     self.collectionView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.collectionView];
     
-    self.isNotDataLoaded = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.collectionView.frame) / 2 - 100, CGRectGetHeight(self.collectionView.frame) / 2 - 15, 200, 30)];
+    // создание метки для отображения информации если нет данных
+    self.isNotDataLoaded = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2 - 100, CGRectGetHeight(self.view.frame) / 2 - 15, 200, 30)];
     self.isNotDataLoaded.textColor = [UIColor blackColor];
     self.isNotDataLoaded.textAlignment = NSTextAlignmentCenter;
     self.isNotDataLoaded.text = @"Ничего не найдено";
     
     [self.view addSubview:self.isNotDataLoaded];
     [self.isNotDataLoaded setHidden:YES];
+    
 }
 
 // STEP 3
@@ -219,8 +240,8 @@ static const CGFloat imageOffset = 100.f;
 
 - (void)loadingIsDonePhoto:(NSDictionary *)data
 {
-        self.list = data[@"photo"];
-        [self.collectionView reloadData];
+    self.list = data[@"photo"];
+    [self.collectionView reloadData];
 }
 
 - (void)loadingContinuesWithProgress:(double)progress
@@ -310,10 +331,19 @@ static const CGFloat imageOffset = 100.f;
     CGFloat size = CGRectGetWidth(self.view.frame) / 2 - 20;
     return CGSizeMake(size, size * 1.5);
 }
-     
+
 - (void) loadNextPage:(NSString *)pageNumber
 {
     [self.networkService findFlickrPhotoWithSearchString:self.searchText page:pageNumber];
+}
+
+- (void)changeSelectedSegmentControl
+{
+    if (self.layoutSegmentControl.selectedSegmentIndex == 0) {
+        [self.collectionView setCollectionViewLayout:flowLayout animated:YES];
+    } else {
+        [self.collectionView setCollectionViewLayout:customLayout animated:YES];
+    }
 }
 
 @end
