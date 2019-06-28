@@ -14,6 +14,7 @@
 #import "DetailViewController.h"
 #import "CustomLayout.h"
 
+@import UserNotifications;
 
 #define FIRST_STEP 0
 #define SECOND_STEP 0
@@ -21,6 +22,7 @@
 #define FLICKR 1
 
 static const CGFloat imageOffset = 100.f;
+static const NSString *identifierForActions = @"LCTReminderCategory";
 
 @interface ViewController () <NetworkServiceOutputProtocol, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource>
 {
@@ -98,6 +100,7 @@ static const CGFloat imageOffset = 100.f;
     
     self.searchBar.delegate = self;
     self.searchBar.placeholder = @"Введите ваш запрос";
+    self.searchBar.text = self.searchText;
     
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
@@ -110,10 +113,10 @@ static const CGFloat imageOffset = 100.f;
     flowLayout = (id)self.collectionView.collectionViewLayout;
     
     self.indexPageLoaded = 25;
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
 #endif
-    
-    
-    
+ 
 }
 
 - (void)prepareUI
@@ -344,6 +347,78 @@ static const CGFloat imageOffset = 100.f;
     } else {
         [self.collectionView setCollectionViewLayout:customLayout animated:YES];
     }
+}
+
+- (void)setPushSearchText:(NSString *)pushSearchText
+{
+    self.searchText = pushSearchText;
+    [self.searchBar setText:pushSearchText];
+    
+    [self.networkService findFlickrPhotoWithSearchString:pushSearchText page:[NSString stringWithFormat:@"%ld",self.indexPageLoaded]];
+}
+
+#pragma mark - LocalNotifications
+
+- (void)sheduleLocalNotification
+{
+    /* Контент - сущность класса UNMutableNotificationContent
+     Содержит в себе:
+     title: Заголовок, обычно с основной причиной показа пуша
+     subtitle: Подзаговолок, не обязателен
+     body: Тело пуша
+     badge: Номер бейджа для указания на иконке приложения
+     sound: Звук, с которым покажется push при доставке. Можно использовать default или установить свой из файла.
+     launchImageName: имя изображения, которое стоит показать, если приложение запущено по тапу на notification.
+     userInfo: Кастомный словарь с данными
+     attachments: Массив UNNotificationAttachment. Используется для включения аудио, видео или графического контента.
+     */
+    UNMutableNotificationContent *content = [UNMutableNotificationContent new];
+    content.title = @"Напоминание!";
+    content.body = [NSString stringWithFormat:@"Вы давно не искали: %@",self.searchText];
+    content.sound = [UNNotificationSound defaultSound];
+    
+    content.badge = @([self giveNewBadgeNumber] + 1);
+    
+//    //  Добавляем кастомный attachement
+//    UNNotificationAttachment *attachment = [self imageAttachment];
+//    if (attachment)
+//    {
+//        content.attachments = @[attachment];
+//    }
+    
+    NSDictionary *dict = @{
+                           @"text": self.searchText
+                           };
+    content.userInfo = dict;
+    
+    // Добавляем кастомную категорию
+    content.categoryIdentifier = identifierForActions;
+    
+    // Смотрим разные варианты триггеров
+    UNNotificationTrigger *whateverTrigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:5 repeats:NO];
+    
+    // Создаем запрос на выполнение
+    // Objective-C
+    NSString *identifier = @"NotificationId";
+    UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifier
+                                                                          content:content trigger:whateverTrigger];
+    
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error)
+     {
+         if (error)
+         {
+             NSLog(@"Чот пошло не так... %@",error);
+         }
+     }];
+}
+
+
+#pragma mark - ContentType
+
+- (NSInteger)giveNewBadgeNumber
+{
+    return [UIApplication sharedApplication].applicationIconBadgeNumber;
 }
 
 @end

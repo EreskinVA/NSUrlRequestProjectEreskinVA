@@ -7,8 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "ViewController.h"
 
-@interface AppDelegate ()
+@import UserNotifications;
+
+@interface AppDelegate () <UNUserNotificationCenterDelegate>
 
 @end
 
@@ -16,7 +19,32 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    // Получаем текущий notificationCenter
+    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+    
+    // Устанавливаем делегат
+    center.delegate = self;
+    
+    // Указываем тип пушей для работы
+    UNAuthorizationOptions options = UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge;
+    
+    // Запрашиваем доступ на работу с пушами
+    [center requestAuthorizationWithOptions:options
+                          completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                              if (!granted)
+                              {
+                                  NSLog(@"Доступ не дали");
+                              }
+                          }];
+    /*
+     // А вот так можно проверить, не изменил ли пользователь настройки для пушей
+     [center getNotificationSettingsWithCompletionHandler:^(UNNotificationSettings * _Nonnull settings) {
+     if (settings.authorizationStatus != UNAuthorizationStatusAuthorized)
+     {
+     // Нет доступа
+     }
+     }];
+     */
     return YES;
 }
 
@@ -28,8 +56,8 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    ViewController *vc = self.window.rootViewController;
+    [vc sheduleLocalNotification];
 }
 
 
@@ -47,5 +75,36 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+#pragma mark - UNUserNotificationCenterDelegate
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+       willPresentNotification:(UNNotification *)notification
+         withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
+{
+    if (completionHandler)
+    {
+        completionHandler(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge);
+    }
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
+didReceiveNotificationResponse:(UNNotificationResponse *)response
+         withCompletionHandler:(void(^)(void))completionHandler
+{
+    UNNotificationContent *content = response.notification.request.content;
+    if (content.userInfo[@"text"])
+    {
+        NSString *text = content.userInfo[@"text"];
+        
+        ViewController *vc = self.window.rootViewController;
+        
+        vc.pushSearchText = text;
+    }
+    
+    if (completionHandler)
+    {
+        completionHandler();
+    }
+}
 
 @end

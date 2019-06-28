@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController 
 
+@property (nonatomic, strong) NSString* pushSearchText;
+
+- (void)sheduleLocalNotification;
 
 @end
 
