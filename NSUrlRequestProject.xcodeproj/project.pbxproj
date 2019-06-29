@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1FC25EC71FD00489009C5C73 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC25EC61FD00489009C5C73 /* AppDelegate.m */; };
-		1FC25ECA1FD00489009C5C73 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC25EC91FD00489009C5C73 /* ViewController.m */; };
 		1FC25ECD1FD00489009C5C73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FC25ECB1FD00489009C5C73 /* Main.storyboard */; };
 		1FC25ECF1FD00489009C5C73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FC25ECE1FD00489009C5C73 /* Assets.xcassets */; };
 		1FC25ED21FD00489009C5C73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1FC25ED01FD00489009C5C73 /* LaunchScreen.storyboard */; };
@@ -17,16 +16,19 @@
 		1FC25EE51FD02AF2009C5C73 /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC25EE41FD02AF2009C5C73 /* NetworkHelper.m */; };
 		1FC25EE91FD070A1009C5C73 /* SBSProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FC25EE81FD070A1009C5C73 /* SBSProgressView.m */; };
 		2B078A4822C617CD005DBBB7 /* CustomLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B078A4722C617CD005DBBB7 /* CustomLayout.m */; };
+		2B078AA622C78054005DBBB7 /* ModelDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B078AA522C78054005DBBB7 /* ModelDetail.m */; };
+		2B078AA922C7821B005DBBB7 /* ViewModelDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B078AA822C7821B005DBBB7 /* ViewModelDetail.m */; };
+		2B078AAC22C78778005DBBB7 /* ViewDetail.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B078AAB22C78778005DBBB7 /* ViewDetail.m */; };
+		2B078AB222C7DD08005DBBB7 /* ModelMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B078AB122C7DD08005DBBB7 /* ModelMain.m */; };
+		2B078AB522C7E4DC005DBBB7 /* ViewModelMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B078AB422C7E4DC005DBBB7 /* ViewModelMain.m */; };
+		2B078ABB22C7E5EC005DBBB7 /* ViewMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B078ABA22C7E5EC005DBBB7 /* ViewMain.m */; };
 		2B37F25D22C45AD600535607 /* FlickrCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B37F25C22C45AD600535607 /* FlickrCollectionViewCell.m */; };
-		2B37F26222C5E28400535607 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B37F26122C5E28400535607 /* DetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1FC25EC21FD00489009C5C73 /* NSUrlRequestProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NSUrlRequestProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1FC25EC51FD00489009C5C73 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1FC25EC61FD00489009C5C73 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1FC25EC81FD00489009C5C73 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		1FC25EC91FD00489009C5C73 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		1FC25ECC1FD00489009C5C73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1FC25ECE1FD00489009C5C73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FC25ED11FD00489009C5C73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -41,10 +43,20 @@
 		1FC25EE81FD070A1009C5C73 /* SBSProgressView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBSProgressView.m; sourceTree = "<group>"; };
 		2B078A4622C617CD005DBBB7 /* CustomLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomLayout.h; sourceTree = "<group>"; };
 		2B078A4722C617CD005DBBB7 /* CustomLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomLayout.m; sourceTree = "<group>"; };
+		2B078AA422C78054005DBBB7 /* ModelDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelDetail.h; sourceTree = "<group>"; };
+		2B078AA522C78054005DBBB7 /* ModelDetail.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelDetail.m; sourceTree = "<group>"; };
+		2B078AA722C7821B005DBBB7 /* ViewModelDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewModelDetail.h; sourceTree = "<group>"; };
+		2B078AA822C7821B005DBBB7 /* ViewModelDetail.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewModelDetail.m; sourceTree = "<group>"; };
+		2B078AAA22C78778005DBBB7 /* ViewDetail.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewDetail.h; sourceTree = "<group>"; };
+		2B078AAB22C78778005DBBB7 /* ViewDetail.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewDetail.m; sourceTree = "<group>"; };
+		2B078AB022C7DD08005DBBB7 /* ModelMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelMain.h; sourceTree = "<group>"; };
+		2B078AB122C7DD08005DBBB7 /* ModelMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ModelMain.m; sourceTree = "<group>"; };
+		2B078AB322C7E4DC005DBBB7 /* ViewModelMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewModelMain.h; sourceTree = "<group>"; };
+		2B078AB422C7E4DC005DBBB7 /* ViewModelMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewModelMain.m; sourceTree = "<group>"; };
+		2B078AB922C7E5EC005DBBB7 /* ViewMain.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewMain.h; sourceTree = "<group>"; };
+		2B078ABA22C7E5EC005DBBB7 /* ViewMain.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewMain.m; sourceTree = "<group>"; };
 		2B37F25B22C45AD600535607 /* FlickrCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FlickrCollectionViewCell.h; sourceTree = "<group>"; };
 		2B37F25C22C45AD600535607 /* FlickrCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FlickrCollectionViewCell.m; sourceTree = "<group>"; };
-		2B37F26022C5E28400535607 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		2B37F26122C5E28400535607 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,20 +89,11 @@
 		1FC25EC41FD00489009C5C73 /* NSUrlRequestProject */ = {
 			isa = PBXGroup;
 			children = (
+				2B078A9A22C77AED005DBBB7 /* StartView */,
+				2B078A9B22C77B95005DBBB7 /* DetailView */,
 				1FC25EE61FD07084009C5C73 /* CustomProgressView */,
 				1FC25EDB1FD01610009C5C73 /* NetworkService */,
-				1FC25EC51FD00489009C5C73 /* AppDelegate.h */,
-				1FC25EC61FD00489009C5C73 /* AppDelegate.m */,
-				1FC25EC81FD00489009C5C73 /* ViewController.h */,
-				1FC25EC91FD00489009C5C73 /* ViewController.m */,
-				2B078A4522C61793005DBBB7 /* CustomLayout */,
-				2B37F25F22C5E25D00535607 /* DetailViewController */,
-				2B37F25A22C45AB200535607 /* CollectionViewCell */,
-				1FC25ECB1FD00489009C5C73 /* Main.storyboard */,
-				1FC25ECE1FD00489009C5C73 /* Assets.xcassets */,
-				1FC25ED01FD00489009C5C73 /* LaunchScreen.storyboard */,
-				1FC25ED31FD00489009C5C73 /* Info.plist */,
-				1FC25ED41FD00489009C5C73 /* main.m */,
+				2B078AA322C77CCE005DBBB7 /* Supporting Files */,
 			);
 			path = NSUrlRequestProject;
 			sourceTree = "<group>";
@@ -123,6 +126,97 @@
 				2B078A4722C617CD005DBBB7 /* CustomLayout.m */,
 			);
 			name = CustomLayout;
+			path = ../..;
+			sourceTree = "<group>";
+		};
+		2B078A9A22C77AED005DBBB7 /* StartView */ = {
+			isa = PBXGroup;
+			children = (
+				1FC25EC51FD00489009C5C73 /* AppDelegate.h */,
+				1FC25EC61FD00489009C5C73 /* AppDelegate.m */,
+				2B078A9C22C77BA2005DBBB7 /* Model */,
+				2B078A9E22C77C3A005DBBB7 /* View */,
+				2B078A9F22C77C40005DBBB7 /* ViewModel */,
+			);
+			path = StartView;
+			sourceTree = "<group>";
+		};
+		2B078A9B22C77B95005DBBB7 /* DetailView */ = {
+			isa = PBXGroup;
+			children = (
+				2B078AA222C77C62005DBBB7 /* Model */,
+				2B078AA122C77C5C005DBBB7 /* View */,
+				2B078AA022C77C56005DBBB7 /* ViewModel */,
+			);
+			name = DetailView;
+			sourceTree = "<group>";
+		};
+		2B078A9C22C77BA2005DBBB7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2B078AB022C7DD08005DBBB7 /* ModelMain.h */,
+				2B078AB122C7DD08005DBBB7 /* ModelMain.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2B078A9E22C77C3A005DBBB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2B078AB922C7E5EC005DBBB7 /* ViewMain.h */,
+				2B078ABA22C7E5EC005DBBB7 /* ViewMain.m */,
+				2B37F25A22C45AB200535607 /* CollectionViewCell */,
+				2B078A4522C61793005DBBB7 /* CustomLayout */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2B078A9F22C77C40005DBBB7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2B078AB322C7E4DC005DBBB7 /* ViewModelMain.h */,
+				2B078AB422C7E4DC005DBBB7 /* ViewModelMain.m */,
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		2B078AA022C77C56005DBBB7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2B078AA722C7821B005DBBB7 /* ViewModelDetail.h */,
+				2B078AA822C7821B005DBBB7 /* ViewModelDetail.m */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		2B078AA122C77C5C005DBBB7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2B078AAA22C78778005DBBB7 /* ViewDetail.h */,
+				2B078AAB22C78778005DBBB7 /* ViewDetail.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		2B078AA222C77C62005DBBB7 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2B078AA422C78054005DBBB7 /* ModelDetail.h */,
+				2B078AA522C78054005DBBB7 /* ModelDetail.m */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2B078AA322C77CCE005DBBB7 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1FC25ECB1FD00489009C5C73 /* Main.storyboard */,
+				1FC25ECE1FD00489009C5C73 /* Assets.xcassets */,
+				1FC25ED01FD00489009C5C73 /* LaunchScreen.storyboard */,
+				1FC25ED31FD00489009C5C73 /* Info.plist */,
+				1FC25ED41FD00489009C5C73 /* main.m */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		2B37F25A22C45AB200535607 /* CollectionViewCell */ = {
@@ -132,15 +226,7 @@
 				2B37F25C22C45AD600535607 /* FlickrCollectionViewCell.m */,
 			);
 			name = CollectionViewCell;
-			sourceTree = "<group>";
-		};
-		2B37F25F22C5E25D00535607 /* DetailViewController */ = {
-			isa = PBXGroup;
-			children = (
-				2B37F26022C5E28400535607 /* DetailViewController.h */,
-				2B37F26122C5E28400535607 /* DetailViewController.m */,
-			);
-			name = DetailViewController;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,7 +255,7 @@
 		1FC25EBA1FD00489009C5C73 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Alexey Levanov";
 				TargetAttributes = {
 					1FC25EC11FD00489009C5C73 = {
@@ -214,15 +300,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B078AB522C7E4DC005DBBB7 /* ViewModelMain.m in Sources */,
 				2B078A4822C617CD005DBBB7 /* CustomLayout.m in Sources */,
-				1FC25ECA1FD00489009C5C73 /* ViewController.m in Sources */,
 				2B37F25D22C45AD600535607 /* FlickrCollectionViewCell.m in Sources */,
 				1FC25ED51FD00489009C5C73 /* main.m in Sources */,
-				2B37F26222C5E28400535607 /* DetailViewController.m in Sources */,
+				2B078ABB22C7E5EC005DBBB7 /* ViewMain.m in Sources */,
+				2B078AAC22C78778005DBBB7 /* ViewDetail.m in Sources */,
 				1FC25EE11FD01B78009C5C73 /* NetworkService.m in Sources */,
 				1FC25EC71FD00489009C5C73 /* AppDelegate.m in Sources */,
 				1FC25EE91FD070A1009C5C73 /* SBSProgressView.m in Sources */,
+				2B078AA922C7821B005DBBB7 /* ViewModelDetail.m in Sources */,
+				2B078AA622C78054005DBBB7 /* ModelDetail.m in Sources */,
 				1FC25EE51FD02AF2009C5C73 /* NetworkHelper.m in Sources */,
+				2B078AB222C7DD08005DBBB7 /* ModelMain.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -262,6 +352,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -269,6 +360,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -317,6 +409,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -324,6 +417,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -358,7 +452,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = NSUrlRequestProject/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/NSUrlRequestProject/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = EVAUrlRequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -373,7 +468,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = NSUrlRequestProject/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/NSUrlRequestProject/Supporting Files/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = EVAUrlRequest;
 				PRODUCT_NAME = "$(TARGET_NAME)";

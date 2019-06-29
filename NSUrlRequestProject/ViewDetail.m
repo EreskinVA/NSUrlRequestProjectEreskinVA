@@ -1,71 +1,107 @@
 //
-//  DetailViewController.m
+//  ViewDetail.m
 //  NSUrlRequestProject
 //
-//  Created by Vladimir Ereskin on 28/06/2019.
+//  Created by Vladimir Ereskin on 29/06/2019.
 //  Copyright © 2019 Alexey Levanov. All rights reserved.
 //
 
-#import "DetailViewController.h"
-#import "NetworkHelper.h"
-#import "NetworkService.h"
+#import "ViewDetail.h"
+#import "ViewModelDetail.h"
+#import "ModelDetail.h"
 
-@interface DetailViewController ()
+static NSString * const keyPathForData = @"dataDetailDictionary";
+static const CGFloat buttonSpacing = 10.f;
+static const CGFloat buttonHeight = 30;
+static const CGFloat buttonWidth = 30.f;
 
-@property (nonatomic, strong) NSDictionary *detailData;
+@interface ViewDetail ()
+
+@property (strong, nonatomic) ViewModelDetail *viewModel;
+
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIImage *image;
 @property (nonatomic, retain) NSMutableArray<UIImage *> *arrayImages;
 
 @end
 
-@implementation DetailViewController
+@implementation ViewDetail
 
 
-#pragma mark - Lifу cyckle
+#pragma mark - Life cyckle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.viewModel = [ViewModelDetail sharedInstanceWithViewController: self];
     
-    [self prepareUI];
-    
-    [self setDisplayData];
+    [self createUI];
+
+    // наблюдатель за изменениями данных
+    [self.viewModel.model addObserver:self forKeyPath:keyPathForData options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:nil];
     
     self.arrayImages = [[NSMutableArray alloc] init];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    // удаление наблюдателя
+    [self.viewModel.model removeObserver:self forKeyPath:keyPathForData];
+}
 
-#pragma mark - Method user interface
 
-- (void)prepareUI
+#pragma mark - обновление интерфейса
+
+- (void)updateDisplay
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSString *dataString = [NSString stringWithFormat:@"farm - %@\nid - %@\nisfamily - %@\nisfriend - %@\nispublic - %@\nowner - %@\nsecret - %@\nserver - %@\n\ntitle - %@",
+                                self.data[@"farm"],
+                                self.data[@"id"],
+                                self.data[@"isfamily"],
+                                self.data[@"isfriend"],
+                                self.data[@"ispublic"],
+                                self.data[@"owner"],
+                                self.data[@"secret"],
+                                self.data[@"server"],
+                                self.data[@"title"]];
+        
+        self.textView.text = dataString;
+        self.imageView.image = [UIImage imageWithData:self.data[@"selectedImage"]];
+    });
+}
+
+
+#pragma mark - observer
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    self.data = [change objectForKey:@"new"];
+    [self updateDisplay];
+}
+
+
+#pragma mark - создание интерфейса
+
+- (void)createUI
+{
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    [self addTextView];
+    [self addBackButton];
+    [self addImageView];
+    [self addFilterButton];
+    [self addCancelFilterEffectButton];
+}
+
+// добавление View для отображения детальной информации по данным
+- (void)addTextView
 {
     self.textView = [[UITextView alloc] initWithFrame:CGRectMake(20, 60, CGRectGetWidth(self.view.frame) - 20, 250)];
     self.textView.textColor = [UIColor blackColor];
     [self.textView setEditable:NO];
+    
     [self.view addSubview:self.textView];
-    
-    
-    self.view.backgroundColor = [UIColor whiteColor];
-    
-    [self addBackButton];
-    
-    [self addImageView];
-    
-    [self addFilterButton];
-    
-    [self addCancelFilterEffectButton];
-    
-    if (self.image == nil)
-    {
-        [self loadImage];
-    } else
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.imageView.image = self.image;
-        });
-    }
 }
 
 // добавление кнопки Закрыть
@@ -82,7 +118,7 @@
 // добавление кнопки отмена последнего эффекта
 - (void) addCancelFilterEffectButton
 {
-    UIButton *cancelFilterEffect = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2 - 60, CGRectGetMaxY(self.imageView.frame) + 10, 120, 40)];
+    UIButton *cancelFilterEffect = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.view.frame) / 2 - 60, CGRectGetMaxY(self.imageView.frame) + buttonSpacing, 120, 40)];
     [cancelFilterEffect setTitle:@"Отменить" forState:UIControlStateNormal];
     [cancelFilterEffect addTarget:self action:@selector(сancelFilterEffect) forControlEvents:UIControlEventTouchUpInside];
     [cancelFilterEffect setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -93,7 +129,7 @@
 // добавление кнопок применения различных фильтров
 - (void) addFilterButton
 {
-    UIButton *filter1Button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.imageView.frame) + 10, CGRectGetMidY(self.imageView.frame) - 55, 30, 30)];
+    UIButton *filter1Button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.imageView.frame) + buttonSpacing, CGRectGetMidY(self.imageView.frame) - buttonSpacing - buttonHeight * 1.5, buttonWidth, buttonHeight)];
     [filter1Button setTitle:@"1" forState:UIControlStateNormal];
     [filter1Button addTarget:self action:@selector(setFilterImageButton1) forControlEvents:UIControlEventTouchUpInside];
     [filter1Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -104,7 +140,7 @@
     
     [self.view addSubview:filter1Button];
     
-    UIButton *filter2Button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.imageView.frame) + 10, CGRectGetMaxY(filter1Button.frame) + 15, 30, 30)];
+    UIButton *filter2Button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.imageView.frame) + buttonSpacing, CGRectGetMaxY(filter1Button.frame) + buttonSpacing, buttonWidth, buttonHeight)];
     [filter2Button setTitle:@"2" forState:UIControlStateNormal];
     [filter2Button addTarget:self action:@selector(setFilterImageButton2) forControlEvents:UIControlEventTouchUpInside];
     [filter2Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -115,7 +151,7 @@
     
     [self.view addSubview:filter2Button];
     
-    UIButton *filter3Button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.imageView.frame) + 10, CGRectGetMaxY(filter2Button.frame) + 15, 30, 30)];
+    UIButton *filter3Button = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(self.imageView.frame) + buttonSpacing, CGRectGetMaxY(filter2Button.frame) + buttonSpacing, buttonWidth, buttonHeight)];
     [filter3Button setTitle:@"3" forState:UIControlStateNormal];
     [filter3Button addTarget:self action:@selector(setFilterImageButton3) forControlEvents:UIControlEventTouchUpInside];
     [filter3Button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
@@ -127,62 +163,13 @@
     [self.view addSubview:filter3Button];
 }
 
-// добавления View для отображения картинки
+// добавление View для отображения картинки
 - (void) addImageView
 {
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(50, CGRectGetMaxY(self.textView.frame) + 50, CGRectGetWidth(self.view.frame) - 100, 350)];
     [self.imageView setContentMode:UIViewContentModeScaleAspectFit];
     
     [self.view addSubview:self.imageView];
-}
-
-
-#pragma mark - получение данных для отобрадения
-
-// формирование и отображения текстовых данных
-- (void) setDisplayData
-{
-    NSString *dataString = [NSString stringWithFormat:@"farm - %@\nid - %@\nisfamily - %@\nisfriend - %@\nispublic - %@\nowner - %@\nsecret - %@\nserver - %@\n\ntitle - %@",
-                            self.detailData[@"farm"],
-                            self.detailData[@"id"],
-                            self.detailData[@"isfamily"],
-                            self.detailData[@"isfriend"],
-                            self.detailData[@"ispublic"],
-                            self.detailData[@"owner"],
-                            self.detailData[@"secret"],
-                            self.detailData[@"server"],
-                            self.detailData[@"title"]];
-    
-    
-    self.textView.text = dataString;
-}
-
-// загрузка картинки из сети
-- (void)loadImage
-{
-    NetworkService *networkService = [NetworkService new];
-    networkService.output = self;
-    [networkService configureUrlSessionWithParams:nil];
-    NSString *urlString = [NetworkHelper URLForGetPhoto:self.detailData[@"id"]
-                                                 farmId:self.detailData[@"farm"]
-                                               serverId:self.detailData[@"server"]
-                                               secretId:self.detailData[@"secret"]];
-    
-    [networkService startImageLoading:urlString success:^(NSData *data) {
-        if (data != nil)
-        {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.imageView.image = [UIImage imageWithData:data];
-            });
-        }
-    }];
-}
-
-#pragma mark - Navigation
-
-- (void) navigateBack
-{
-    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 
@@ -223,10 +210,10 @@
 - (UIImage *)imageAfterFiltering:(UIImage *)imageToFilter withIntensity: (NSNumber *) intensity forButton:(NSNumber *)buttonNumber
 {
     UIImage *imageToDisplay = [self normalizedImageWithImage:imageToFilter];
-
+    
     CIContext *context = [[CIContext alloc] initWithOptions:nil];
     CIImage *ciImage = [[CIImage alloc] initWithImage:imageToDisplay];
-
+    
     CIImage *result = [CIImage new];
     
     if (buttonNumber == [NSNumber numberWithInt:1])
@@ -250,26 +237,13 @@
         [ciEdges setValue:ciImage forKey:kCIInputImageKey];
         result = [ciEdges valueForKey:kCIOutputImageKey];
     }
-
+    
     CGRect extent = [result extent];
     CGImageRef cgImage = [context createCGImage:result fromRect:extent];
     UIImage *filteredImage = [[UIImage alloc] initWithCGImage:cgImage];
     CFRelease(cgImage);
-
+    
     return filteredImage;
-}
-
-
-#pragma mark - Setters
-
-- (void)setPhotoImage:(UIImage *)photoImage
-{
-    self.image = photoImage;
-}
-
-- (void)setData:(NSDictionary *)data
-{
-    self.detailData = data;
 }
 
 
@@ -287,6 +261,13 @@
     UIImage *normalizedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return normalizedImage;
+}
+
+#pragma mark - Navigation
+
+- (void) navigateBack
+{
+    [self dismissViewControllerAnimated:true completion:nil];
 }
 
 @end

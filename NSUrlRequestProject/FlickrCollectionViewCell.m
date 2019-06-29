@@ -32,12 +32,10 @@
         [self.backView addSubview:_coverImageView];
         
         _titleLabel = [UILabel new];
-//        _titleLabel.backgroundColor = [UIColor yellowColor];
         _titleLabel.numberOfLines = 2;
         [self.backView addSubview:_titleLabel];
         
         _subtitleLabel = [UILabel new];
-//        _subtitleLabel.backgroundColor = [UIColor greenColor];
         [_backView addSubview:_subtitleLabel];
         
         _activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -103,7 +101,7 @@
     });
 }
 
-- (void)setIsActivity:(Boolean *)isActivity
+- (void)setIsActivity:(Boolean)isActivity
 {
     if (isActivity)
     {

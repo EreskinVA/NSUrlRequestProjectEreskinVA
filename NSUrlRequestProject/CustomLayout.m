@@ -61,7 +61,6 @@
         sectionCount = [self.collectionView.dataSource numberOfSectionsInCollectionView:self.collectionView];
     }
     CGSize cellSize = self.cellSize;
-    float collectionWidth = self.collectionView.bounds.size.width;
     float xOffset = 10;
     float yOffset = 0;
     Boolean rowOdd = true;
@@ -74,7 +73,6 @@
             NSIndexPath *idxPath = [NSIndexPath indexPathForItem:item inSection:section];
             UICollectionViewLayoutAttributes *attrs = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:idxPath];
             
-            NSLog(@"%ld",idxPath.item);
             if (rowOdd)
             {
                 switch (idxPath.item % 3)
@@ -105,7 +103,8 @@
                         
                         break;
                 }
-            } else
+            }
+            else
             {
                 switch (idxPath.item % 3)
                 {

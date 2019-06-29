@@ -42,15 +42,15 @@
 
 - (void)startImageLoading:(NSString *)url success:(void(^)(NSData *data))success
 {
-//    if (!self.urlSession)
-//    {
-//        NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//        self.urlSession = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:self delegateQueue:nil];
-//    }
-////    self.downloadTask = [self.urlSession downloadTaskWithURL:[NSURL URLWithString:@"https://upload.wikimedia.org/wikipedia/commons/4/4e/Pleiades_large.jpg"]];
-//    self.downloadTask = [self.urlSession downloadTaskWithURL:[NSURL URLWithString:url]];
-//    /* http://is1.mzstatic.com/image/thumb/Purple2/v4/91/59/e1/9159e1b3-f67c-6c05-0324-d56f4aee156a/source/100x100bb.jpg */
-//    [self.downloadTask resume];
+    //    if (!self.urlSession)
+    //    {
+    //        NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    //        self.urlSession = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:self delegateQueue:nil];
+    //    }
+    ////    self.downloadTask = [self.urlSession downloadTaskWithURL:[NSURL URLWithString:@"https://upload.wikimedia.org/wikipedia/commons/4/4e/Pleiades_large.jpg"]];
+    //    self.downloadTask = [self.urlSession downloadTaskWithURL:[NSURL URLWithString:url]];
+    //    /* http://is1.mzstatic.com/image/thumb/Purple2/v4/91/59/e1/9159e1b3-f67c-6c05-0324-d56f4aee156a/source/100x100bb.jpg */
+    //    [self.downloadTask resume];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:[NSURL URLWithString:url] completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         if (!error)
@@ -98,7 +98,7 @@
 - (void)findFlickrPhotoWithSearchString:(NSString *)searchSrting page:(NSString *)page
 {
     NSString *urlString = [NetworkHelper URLForSearchString:searchSrting page:page];
-        
+    
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
     [request setURL:[NSURL URLWithString: urlString]];
     [request setHTTPMethod:@"GET"];
@@ -109,13 +109,15 @@
     session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
     NSURLSessionDataTask *sessionDataTask = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        NSDictionary *temp = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        NSDictionary *tempPhotos = temp[@"photos"];
-//        temp["photo"]
-        // Для получение деталей по фото
-        // https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}.jpg
-        // example https://farm1.staticflickr.com/2/1418878_1e92283336_m.jpg
-
+        
+        NSMutableDictionary *tempPhotos = [NSMutableDictionary new];
+        
+        if (data != nil)
+        {
+            NSDictionary *temp = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+            tempPhotos = temp[@"photos"];
+        }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.output loadingIsDonePhoto:tempPhotos];
         });

@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "ViewController.h"
+#import "ViewMain.h"
 
 @import UserNotifications;
 
@@ -56,7 +56,7 @@
 
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    ViewController *vc = self.window.rootViewController;
+    ViewMain *vc = (ViewMain *)self.window.rootViewController;
     [vc sheduleLocalNotification];
 }
 
@@ -96,7 +96,7 @@ didReceiveNotificationResponse:(UNNotificationResponse *)response
     {
         NSString *text = content.userInfo[@"text"];
         
-        ViewController *vc = self.window.rootViewController;
+        ViewMain *vc = (ViewMain *)self.window.rootViewController;
         
         vc.pushSearchText = text;
     }
