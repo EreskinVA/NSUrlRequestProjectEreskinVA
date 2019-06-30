@@ -96,10 +96,6 @@ static NSString * const identifierForActions = @"LCTReminderCategory";
 
 - (void)prepareUIFlickr
 {
-    // Custom Layout
-    customLayout = [CustomLayout new];
-    customLayout.cellSize = CGSizeMake(CGRectGetWidth(self.collectionView.frame) / 2 - 20, (CGRectGetWidth(self.collectionView.frame) / 2 - 20) * 1.5);
-    customLayout.sectionSpacing = CGSizeMake(10, 10);
     
     // создание SearchBar
     self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 50, CGRectGetWidth(self.view.frame), 50)];
@@ -130,6 +126,21 @@ static NSString * const identifierForActions = @"LCTReminderCategory";
     [self.view addSubview:self.isNotDataLoaded];
     [self.isNotDataLoaded setHidden:YES];
     
+    // Custom Layout
+    customLayout = [CustomLayout new];
+    customLayout.cellSize = CGSizeMake(CGRectGetWidth(self.collectionView.frame) / 2 - 20, (CGRectGetWidth(self.collectionView.frame) / 2 - 20) * 1.5);
+    customLayout.sectionSpacing = CGSizeMake(10, 10);
+}
+
+
+#pragma mark - скрытие клавиатуры
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [super touchesBegan:touches withEvent:event];
+    
+    [self.view endEditing:YES];
+    [self hideTableViewSearchHistory];
 }
 
 
@@ -243,6 +254,11 @@ static NSString * const identifierForActions = @"LCTReminderCategory";
 {
     CGFloat size = CGRectGetWidth(self.view.frame) / 2 - 20;
     return CGSizeMake(size, size * 1.5);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self hideTableViewSearchHistory];
 }
 
 

@@ -103,8 +103,7 @@
                         
                         break;
                 }
-            }
-            else
+            } else
             {
                 switch (idxPath.item % 3)
                 {
